@@ -86,9 +86,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:isScrollContainer="false"
-        android:scrollbars="vertical"
-        android:scrollHorizontally="false"
-        android:verticalScrollbarPosition="git "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
@@ -104,4 +101,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSavedData" />
+
+    <Button
+        android:id="@+id/btnLaunchNewActivity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Click me for sign up!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGetData" />
 </androidx.constraintlayout.widget.ConstraintLayout>

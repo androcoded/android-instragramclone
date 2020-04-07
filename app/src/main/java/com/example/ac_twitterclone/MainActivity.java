@@ -1,14 +1,13 @@
 package com.example.ac_twitterclone;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Scroller;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -23,7 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText edtName,edtPunchSpeed,edtPunchPower,edtKickSpeed,edtKickPower;
-    private Button btnLogin,btnGetData;
+    private Button btnLogin, btnGetData, btnLaunchNewActivity;
     private TextView txtSavedData;
     private String kickBoxerObject ="";
 
@@ -40,8 +39,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin = findViewById(R.id.btnLogin);
         btnGetData = findViewById(R.id.btnGetData);
         txtSavedData = findViewById(R.id.txtSavedData);
+        btnLaunchNewActivity = findViewById(R.id.btnLaunchNewActivity);
         btnLogin.setOnClickListener(this);
         btnGetData.setOnClickListener(this);
+        btnLaunchNewActivity.setOnClickListener(this);
+
     }
 
     @Override
@@ -76,21 +78,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnGetData:
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("KickBoxer");
+                query.whereStartsWith("name", "A");
                 query.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
                         if (objects.size()>0 && e == null){
                             for (ParseObject kickBoxer : objects){
                                 kickBoxerObject = kickBoxerObject + "Name: "+kickBoxer.get("name") +" " +
-                                    "Punch Speed: "+kickBoxer.get("punchSpeed")+" "+ "Punch Power: "
+                                        "Punch Speed: " + kickBoxer.get("punchSpeed") + " " + "Punch Power: "
                                         +kickBoxer.get("punchPower")+" "+" Kick Speed: " +
                                         kickBoxer.get("kickSpeed")+" Kick Power:"+kickBoxer.get("kickPower")+ "\n";
                             }
+
+                        } else {
+                            FancyToast.makeText(getApplicationContext(), e.getMessage() + " ", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
                         }
 
                         txtSavedData.setText(kickBoxerObject);
                     }
                 });
+                break;
+            case R.id.btnLaunchNewActivity:
+                Intent intent = new Intent(MainActivity.this, SignUp.class);
+                startActivity(intent);
                 break;
         }
 
